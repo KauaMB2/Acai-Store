@@ -1,0 +1,66 @@
+:root {
+  font-family: "Lalezar", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: rgba(255, 255, 255, 1);
+  background-color: #360043;
+}
+body{
+  margin: 0px;
+}
+img{
+  width: 2em;
+}
+
+button{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-radius: 10px;
+  border: 2px solid #EFFF15;
+  background-color: #EFFF15;
+  color: #71058C;
+  font-weight: 800;
+  cursor: pointer;
+}
+button:hover{
+  background-color: transparent;
+  color: #EFFF15;
+  transition: 0.2s;
+}
+
+h1, h2, h2, h4, h5, h6, p{
+  margin: 0px;
+}
+
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}

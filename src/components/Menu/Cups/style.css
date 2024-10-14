@@ -1,0 +1,49 @@
+.cups{
+    width: 100%;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.list{
+    width: 100%;
+    margin-left: 30px;
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.cup{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+}
+.moneyValue{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#cup_0{
+    width: 20px;
+}
+#cup_1{
+    width: 30px;
+}
+#cup_2{
+    width: 40px;
+}
+#cup_3{
+    width: 50px;
+}
+#cup_4{
+    width: 60px;
+}
+
+@media (max-width:500px){
+    .cups{
+        height: 350px;
+    }
+}

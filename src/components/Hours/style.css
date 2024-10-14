@@ -1,0 +1,14 @@
+.hours{
+    background-color: white;
+}
+.hoursInfo{
+    color: black;
+    padding: 20px;
+}
+.hour{
+    display: flex;
+    justify-content: space-between;
+}
+.hours p{
+    font-size: 1.2rem;
+}

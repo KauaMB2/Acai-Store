@@ -1,0 +1,19 @@
+.navbar{
+    background-color: white;
+    padding: 0px;
+    background-color: #71058C;
+    display: flex;
+    justify-content: space-between;
+}
+.networksIcons{
+    display: flex;
+    align-items: center;
+}
+.logoDiv img{
+    width: 4em;
+}
+img{
+    margin: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}

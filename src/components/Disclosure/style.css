@@ -1,0 +1,108 @@
+#disclosure {
+    background-image: url("./../../assets/background1.png"); /* Update with the correct path */
+    background-repeat: repeat; /* Ensures the image repeats */
+    background-size: contain; /* Ensures the image scales to fit while maintaining aspect ratio */
+    background-position: center; /* Centers the image horizontally */
+    min-height: 100vh; /* Adjusts the height of the container */
+    padding: 20px; /* Optional padding */
+    color: white; /* Optional text color for better visibility */
+    max-width: 100vw;
+}
+
+.slogan .message1{
+    display: flex;
+    flex-direction: column;
+}
+
+.slogan .message1 p{
+    font-size: 7rem;
+    height: 7.5rem;
+}
+
+.slogan .message1 span{
+    font-size: 1.5rem;
+    white-space: nowrap
+}
+
+.slogan .message2 p{
+    font-size: 2rem;
+}
+.slogan .message2 button{
+    width: 50%;
+    font-size: 1rem;
+}
+.gridRow1{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 50% 50%;
+}
+.gridRow2{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 50% 50%;
+}
+.gridRow2 .message1{
+    text-align: center;
+    font-size: 3rem;
+}
+.gridRow2 .message2{
+    display: flex;
+    column-gap: 20px;
+    justify-content: center;
+}
+.gridRow2 .message2 img{
+    width: 80px;
+    margin: 0px;
+}
+.gridRow2 .message2 .locationText{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 2.2rem;
+}
+.acaiImage{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+.acaiImage img{
+    width: 100%;
+}
+
+.slogan{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 10rem 150px;
+}
+
+@media (max-width: 768px){
+    .gridRow1{
+        display: grid;
+        grid-template-rows: 50% 50%;
+        grid-template-columns: 1fr;
+    }
+    .message2{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .slogan .message1 p{
+        font-size:5.2rem;
+        height: 6rem;
+        text-align: center;
+    }
+    .slogan .message1 span{
+        text-align: center;
+    }
+    .acaiImage{
+        justify-content: center;
+    }
+    .acaiImage img{
+        width: 70%;
+    }
+}
+@media (max-width:500px){
+    .message2 img{
+        margin-bottom: 30px !important;
+    }
+}

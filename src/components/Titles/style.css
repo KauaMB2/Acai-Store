@@ -1,0 +1,20 @@
+.yellowBar{
+    width: 100%;
+    height: 10px;
+    background-color: #EFFF15;
+}
+.flex{
+    display: flex;
+    justify-content: center;
+}
+.title .text{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #71058C;
+    font-size: 1.4rem;
+}
+.title .text img{
+    margin-left: 5px;
+    margin-right: 5px;
+}
