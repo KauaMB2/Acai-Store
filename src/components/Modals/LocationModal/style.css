@@ -1,0 +1,4 @@
+.locationModal .modal-header{
+    display: flex;
+    justify-content: left;
+}

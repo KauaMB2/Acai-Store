@@ -1,12 +1,18 @@
 import './style.css'
-import acaisImg from "./../../assets/acais.png"
-import locationImg from "./../../assets/icons/location.svg"
+import acaisImg from "./../../../assets/acais.png"
+import locationImg from "./../../../assets/icons/location.svg"
 import Map from "./Map"
 import { useContext } from 'react'
-import { LandingPageContext } from '../../context/LandingPage'
+import { LandingPageContext } from './../../../context/LandingPage'
+import { ModalsContext } from './../../../context/Modals'
 
 const Disclosure=()=>{
   const { currentDay } = useContext(LandingPageContext)
+  const { setIsSideDishesModalOn } = useContext(ModalsContext)
+  const test=()=>{
+    console.log("ABC")
+    
+  }
   return (
     <div id='disclosure'>
         <div className="container">
@@ -18,7 +24,7 @@ const Disclosure=()=>{
                     </div>
                     <div className='message2'>
                       <p>Já pediu o seu?</p>
-                      <button>Faça seu pedido</button>
+                      <button onClick={()=>{setIsSideDishesModalOn(true)}}>Faça seu pedido</button>
                     </div>
                 </div>
                 <div className='acaiImage'>

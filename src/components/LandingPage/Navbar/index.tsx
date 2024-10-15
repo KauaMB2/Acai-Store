@@ -1,8 +1,8 @@
 import './style.css'
-import Logo1 from "./../../assets/Logo1.png"
-import facebookIcon from "./../../assets/icons/facebook.svg"
-import deliveryIcon from "./../../assets/icons/delivery.svg"
-import ifoodIcon from "./../../assets/icons/ifood.svg"
+import Logo1 from "./../../../assets/Logo1.png"
+import facebookIcon from "./../../../assets/icons/facebook.svg"
+import deliveryIcon from "./../../../assets/icons/delivery.svg"
+import ifoodIcon from "./../../../assets/icons/ifood.svg"
 
 const Navbar = () => {
   return (

@@ -1,5 +1,5 @@
 #disclosure {
-    background-image: url("./../../assets/background1.png"); /* Update with the correct path */
+    background-image: url("./../../../assets/background1.png"); /* Update with the correct path */
     background-repeat: repeat; /* Ensures the image repeats */
     background-size: contain; /* Ensures the image scales to fit while maintaining aspect ratio */
     background-position: center; /* Centers the image horizontally */

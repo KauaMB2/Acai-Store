@@ -1,8 +1,8 @@
 import { useContext } from "react"
 import Title from "../Titles"
-import clockIcon from "./../../assets/icons/clock.svg"
+import clockIcon from "./../../../assets/icons/clock.svg"
 import "./style.css"
-import { LandingPageContext } from "../../context/LandingPage"
+import { LandingPageContext } from "./../../../context/LandingPage"
 
 const Hours = () => {
   const { currentDay } = useContext(LandingPageContext)

@@ -1,5 +1,5 @@
 import Title from "../../Titles"
-import cupIcon from "./../../../assets/icons/cup.svg" 
+import cupIcon from "./../../../../assets/icons/cup.svg" 
 import "./style.css"
 interface PricesProps {
   size: string;

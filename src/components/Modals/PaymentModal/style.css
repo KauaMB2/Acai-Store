@@ -1,0 +1,8 @@
+.orderSummary p{
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.paymentModal .modal-header{
+    display: flex;
+    justify-content: left;
+}
