@@ -9,10 +9,6 @@ import { ModalsContext } from './../../../context/Modals'
 const Disclosure=()=>{
   const { currentDay } = useContext(LandingPageContext)
   const { setIsSideDishesModalOn } = useContext(ModalsContext)
-  const test=()=>{
-    console.log("ABC")
-    
-  }
   return (
     <div id='disclosure'>
         <div className="container">
