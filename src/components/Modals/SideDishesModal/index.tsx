@@ -1,16 +1,15 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Button, Modal, Container } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { FaArrowLeft, FaShoppingCart } from "react-icons/fa";
 import cupIcon from "./../../../assets/icons/cup.svg";
 import { ModalsContext } from "../../../context/Modals";
-import "./style.css"
 import { sideDishes, cupPrices } from "../../../jsons";
 import { OrderContext } from "../../../context/Order";
+import "./style.css"
 
 interface CupsProps {
   selectedCup: number;
-  setSelectedCup: (value: number) => void;
+  setSelectedCup: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Cups = ({ selectedCup, setSelectedCup }: CupsProps) => {
@@ -18,7 +17,7 @@ const Cups = ({ selectedCup, setSelectedCup }: CupsProps) => {
   const handleCupClick = (index: number) => {
     const newSelectedCup = selectedCup !== index ? index : -1;
     setSelectedCup(newSelectedCup);
-  };
+  }
 
   return (
     <div className="cups modalContainer">
@@ -45,23 +44,48 @@ const Cups = ({ selectedCup, setSelectedCup }: CupsProps) => {
       </div>
     </div>
   );
-};
+}
 
 const SideDishesModal = () => {
-  const { isSideDishesModalOn, setIsSideDishesModalOn, setIsLocationModalOn } = useContext(ModalsContext)
-  const { totalPrice, quantities, selectedCup, setTotalPrice, setQuantities, setSelectedCup } = useContext(OrderContext)
+  const { isSideDishesModalOn, setIsSideDishesModalOn, setIsLocationModalOn, setIsShoppingCartModalOn } = useContext(ModalsContext);
+  const { totalPrice, quantities, selectedCup, setTotalPrice, setQuantities, setSelectedCup, acaiCount, setAcaiCount } = useContext(OrderContext);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(true);
 
   const handleClose = () => {
-    setQuantities(Array(sideDishes.length).fill(0))
-    setSelectedCup(-1)
-    setIsSideDishesModalOn(false)
+    setQuantities(Array(sideDishes.length).fill(0));
+    setSelectedCup(-1);
+    setIsSideDishesModalOn(false);
+    setShowErrorMessage(false);
+    setErrorMessage("");
+    setAcaiCount(0); 
+  };
+
+  const addOrder=()=>{
+    setAcaiCount(prev => prev+1)
+    setQuantities(Array(sideDishes.length).fill(0));
+    setSelectedCup(-1);
   }
-  const handleContinue=()=>{
+
+  const handleContinue = () => {
+    if (selectedCup == -1) {
+      setShowErrorMessage(true);
+      setErrorMessage("Você deve selecionar algum copo.");
+      return;
+    }
+    setIsSideDishesModalOn(false);
+    setIsLocationModalOn(true);
+    setShowErrorMessage(false);
+    setErrorMessage("");
+  };
+
+  const handleOpenShoppingCart=()=>{
     setIsSideDishesModalOn(false)
-    setIsLocationModalOn(true)
+    setIsShoppingCartModalOn(true)
   }
+
   const increment = (index: number) => {
-    setQuantities((prev:number[]) => {
+    setQuantities((prev: number[]) => {
       const newQuantities = [...prev];
       newQuantities[index] += 1;
       return newQuantities;
@@ -71,7 +95,9 @@ const SideDishesModal = () => {
   const decrement = (index: number) => {
     setQuantities((prev) => {
       const newQuantities = [...prev];
-      if (newQuantities[index] > 0) newQuantities[index] -= 1;
+      if (newQuantities[index] > 0) {
+        newQuantities[index] -= 1;
+      }
       return newQuantities;
     });
   };
@@ -84,15 +110,11 @@ const SideDishesModal = () => {
 
   const getSelectedSideDishes = () => {
     return quantities.map((quantity, index) =>
-        quantity > 0 ? `${sideDishes[index].name}(${quantity})` : ""
-      )
+      quantity > 0 ? `${sideDishes[index].name}(${quantity})` : ""
+    )
       .filter(Boolean)
       .join(", ");
   };
-
-  const handleReturn=()=>{
-    setIsSideDishesModalOn(false)
-  }
 
   return (
     <Container className="text-center">
@@ -100,31 +122,30 @@ const SideDishesModal = () => {
         <Modal.Header className="modal-header">
           <div className="header-title">
             <div className="header-title-text">
-              <Button
-                variant="link"
-                onClick={handleReturn}
-                className="d-flex align-items-center me-2"
-              >
+              <Button variant="link" onClick={handleClose} className="d-flex align-items-center me-2">
                 <FaArrowLeft style={{ fontSize: '20px' }} />
               </Button>
-            <Modal.Title className="modal-title">Tamanho e acompanhamentos</Modal.Title>
+              <Modal.Title className="modal-title">Tamanho e acompanhamentos</Modal.Title>
             </div>
             <div className="size-amount">
-              <h3 className="modal-subtitle">
-                Tamanho:{" "}
-                {selectedCup !== -1
-                  ? [`300mL`, `400mL`, `500mL`, `700mL`, `1L`][selectedCup]
-                  : ""}
-              </h3>
-              <h3 className="modal-subtitle">
+              <p className="modal-subtitle">
+                Tamanho: {selectedCup !== -1 ? [`300mL`, `400mL`, `500mL`, `700mL`, `1L`][selectedCup] : ""}
+              </p>
+              <p className="modal-subtitle">
                 Acompanhamentos: {getSelectedSideDishes() || ""}
-              </h3>
+              </p>
+              <p className="modalErrorMessage modal-subtitle">{showErrorMessage && errorMessage}</p>
             </div>
           </div>
-          <FaShoppingCart size={42} className="fa-shopping-cart" />
+            <Button variant="link" onClick={handleOpenShoppingCart} className="cart-container">
+              <FaShoppingCart size={42} className="fa-shopping-cart" />
+              {acaiCount > 0 && (
+                <div className="cart-counter">{acaiCount}</div>
+              )}
+            </Button>
         </Modal.Header>
         <Modal.Body className="modal-body">
-          <Cups selectedCup={selectedCup} setSelectedCup={setSelectedCup} />
+        <Cups selectedCup={selectedCup} setSelectedCup={setSelectedCup} />
           <div style={{ width: "100%", overflowX: "auto", marginTop: "20px" }}>
             <div className="table-header">
               <div className="table-cell">Acompanhamento</div>
@@ -153,12 +174,12 @@ const SideDishesModal = () => {
             <strong>Total: R$ {totalPrice.toFixed(2)}</strong>
           </div>
           <Button variant="secondary" onClick={handleClose}>Fechar</Button>
-          <Button variant="primary" onClick={()=>{}}>Adicionar pedido</Button>
+          <Button variant="primary" onClick={addOrder}>Adicionar pedido</Button>
           <Button variant="success" onClick={handleContinue}>Prosseguir</Button>
         </Modal.Footer>
       </Modal>
     </Container>
-  )
-}
+  );
+};
 
-export default SideDishesModal
+export default SideDishesModal;

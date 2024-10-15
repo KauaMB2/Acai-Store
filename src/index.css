@@ -19,21 +19,27 @@ button{
   padding-left: 16px;
   padding-right: 16px;
   border-radius: 10px;
-  border: 2px solid #EFFF15;
-  background-color: #EFFF15;
+  border: 2px solid #0DFF31;
+  background-color: #0DFF31;
   color: #71058C;
   font-weight: 800;
   cursor: pointer;
 }
 button:hover{
   background-color: transparent;
-  color: #EFFF15;
+  color: #0DFF31;
   transition: 0.2s;
 }
 
 h1, h2, h2, h4, h5, h6, p, span{
   font-family: "Lalezar", system-ui, Avenir, Helvetica, Arial, sans-serif;
   margin: 0px;
+}
+
+.modalErrorMessage{
+  color: red;
+  border-left: 1px solid red;
+  padding-left: 5px;
 }
 
 .container {

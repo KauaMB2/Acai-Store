@@ -11,8 +11,9 @@
     margin-bottom: 5px;
   }
   
-  .modal-subtitle {
+  .size-amount .modal-subtitle {
     font-size: small;
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
     margin-bottom: 3px;
   }
   
@@ -89,6 +90,27 @@
   .table-row span{
     font-family: Tahoma, Geneva, Verdana, sans-serif;
   }
+  .cart-container {
+    position: relative;
+  }
+  
+  .cart-counter {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #0DFF31;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    margin-top: 10px;
+    font-size: 12px;
+  }
+  
 
   @media (max-width: 410px){
     div[class="table-cell"]{

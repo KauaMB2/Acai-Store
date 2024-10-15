@@ -4,9 +4,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap"; // Import the Button component
 import { ModalsContext } from "../../../context/Modals";
 import "./style.css"
+import { OrderContext } from "../../../context/Order";
+import { sideDishes } from "../../../jsons";
 
 const DeliveryAddressForm = () => {
   const { isLocationModalOn, setIsLocationModalOn, setIsSideDishesModalOn, setIsPaymentModalOn } = useContext(ModalsContext);
+  const { setQuantities, setSelectedCup } = useContext(OrderContext)
   const [address, setAddress] = useState({
     street: "",
     city: "",
@@ -16,14 +19,20 @@ const DeliveryAddressForm = () => {
   const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setAddress((prev) => ({ ...prev, [name]: value }));
-  };
+    const { name, value } = e.target
+    setAddress((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleClose=()=>{
+    setQuantities(Array(sideDishes.length).fill(0))
+    setSelectedCup(-1)
+    setIsLocationModalOn(false)
+  }
 
   const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    console.log("Delivery Address:", address);
-    setIsLocationModalOn(false); // Close modal on submit
+    e.preventDefault()
+    console.log("Delivery Address:", address)
+    setIsLocationModalOn(false) // Close modal on submit
     setIsPaymentModalOn(true)
   };
 
@@ -67,8 +76,8 @@ const DeliveryAddressForm = () => {
   };
 
   const handleReturn = () => {
-    setIsLocationModalOn(false);
-    setIsSideDishesModalOn(true);
+    setIsLocationModalOn(false)
+    setIsSideDishesModalOn(true)
   };
 
   return (
@@ -130,7 +139,7 @@ const DeliveryAddressForm = () => {
               required
             />
           </div>
-          <Button variant="secondary" className="me-2" onClick={() => setIsLocationModalOn(false)}>Fechar</Button>
+          <Button variant="secondary" className="me-2" onClick={handleClose}>Fechar</Button>
           <Button
             variant="primary"
             onClick={getCurrentPosition}
