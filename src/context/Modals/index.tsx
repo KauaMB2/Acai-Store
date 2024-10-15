@@ -12,7 +12,7 @@ interface ModalsProps {
 const ModalsContext = createContext<ModalsProps>({} as ModalsProps)
 
 const ModalsProvider = ({ children }: { children: React.ReactNode }) => {
-    const [isSideDishesModalOn, setIsSideDishesModalOn]=useState<boolean>(true)
+    const [isSideDishesModalOn, setIsSideDishesModalOn]=useState<boolean>(false)
     const [isLocationModalOn, setIsLocationModalOn]=useState<boolean>(false)
     const [isPaymentModalOn, setIsPaymentModalOn]=useState<boolean>(false)
     
