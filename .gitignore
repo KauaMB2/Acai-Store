@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+apis/efipay/producao-619934-acai.p12
 
 # Editor directories and files
 .vscode/*

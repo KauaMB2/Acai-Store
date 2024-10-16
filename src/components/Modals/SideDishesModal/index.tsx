@@ -46,9 +46,18 @@ const Cups = ({ selectedCup, setSelectedCup }: CupsProps) => {
   );
 }
 
+interface AcaiProps{
+  count:number;
+  orders:Array<{
+      selectedCup:number;
+      totalPrice:number;
+      quantity:number[];
+  }>
+}
+
 const SideDishesModal = () => {
   const { isSideDishesModalOn, setIsSideDishesModalOn, setIsLocationModalOn, setIsShoppingCartModalOn } = useContext(ModalsContext);
-  const { totalPrice, quantities, selectedCup, setTotalPrice, setQuantities, setSelectedCup, acaiCount, setAcaiCount } = useContext(OrderContext);
+  const { totalPrice, absolutePrice, quantities, selectedCup, orderList, setTotalPrice, setQuantities, setSelectedCup, setOrderList, setAbsolutePrice } = useContext(OrderContext);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(true);
 
@@ -58,25 +67,46 @@ const SideDishesModal = () => {
     setIsSideDishesModalOn(false);
     setShowErrorMessage(false);
     setErrorMessage("");
-    setAcaiCount(0); 
+    setOrderList({count:0, orders:[]})
+    setAbsolutePrice(0)
   };
 
-  const addOrder=()=>{
-    setAcaiCount(prev => prev+1)
-    setQuantities(Array(sideDishes.length).fill(0));
-    setSelectedCup(-1);
-  }
-
-  const handleContinue = () => {
+  const addOrder = () => {
     if (selectedCup == -1) {
       setShowErrorMessage(true);
-      setErrorMessage("Você deve selecionar algum copo.");
+      setErrorMessage("Para adicionar um pedido, você deve selecionar algum copo.");
       return;
     }
-    setIsSideDishesModalOn(false);
-    setIsLocationModalOn(true);
+    setOrderList((prev: AcaiProps) => {
+        const newOrder = {
+            selectedCup: selectedCup,
+            quantity: quantities,
+            totalPrice: totalPrice
+        };
+
+        return {
+            count: prev.count + 1,
+            orders: [...prev.orders, newOrder],
+        };
+    });
+    setAbsolutePrice((prev)=>{
+      return prev+totalPrice
+    })
+    setQuantities(Array(sideDishes.length).fill(0))
+    setSelectedCup(-1)
+    setTotalPrice(0)
     setShowErrorMessage(false);
     setErrorMessage("");
+};
+
+  const handleContinue = () => {
+    if(orderList.count==0){
+      setShowErrorMessage(true);
+      setErrorMessage("Você deve adicionar, no mínimo, um pedido no carrinho.")
+      return
+    }
+    setIsSideDishesModalOn(false)
+    setIsLocationModalOn(true)
   };
 
   const handleOpenShoppingCart=()=>{
@@ -118,7 +148,7 @@ const SideDishesModal = () => {
 
   return (
     <Container className="text-center">
-      <Modal show={isSideDishesModalOn} onHide={handleClose} size="xl">
+      <Modal className="SideDishesModal" show={isSideDishesModalOn} onHide={handleClose} size="xl">
         <Modal.Header className="modal-header">
           <div className="header-title">
             <div className="header-title-text">
@@ -129,19 +159,20 @@ const SideDishesModal = () => {
             </div>
             <div className="size-amount">
               <p className="modal-subtitle">
-                Tamanho: {selectedCup !== -1 ? [`300mL`, `400mL`, `500mL`, `700mL`, `1L`][selectedCup] : ""}
+                Tamanho: <span>{selectedCup !== -1 ? [`300mL`, `400mL`, `500mL`, `700mL`, `1L`][selectedCup] : ""}</span>
               </p>
               <p className="modal-subtitle">
-                Acompanhamentos: {getSelectedSideDishes() || ""}
+                Acompanhamentos: <span>{getSelectedSideDishes() || ""}</span>
+              </p>
+              <p className="modal-subtitle">
+                Preço do pedido: <span>R$ { totalPrice.toFixed(2) }</span>
               </p>
               <p className="modalErrorMessage modal-subtitle">{showErrorMessage && errorMessage}</p>
             </div>
           </div>
             <Button variant="link" onClick={handleOpenShoppingCart} className="cart-container">
               <FaShoppingCart size={42} className="fa-shopping-cart" />
-              {acaiCount > 0 && (
-                <div className="cart-counter">{acaiCount}</div>
-              )}
+                <div className="cart-counter">{orderList.count}</div>
             </Button>
         </Modal.Header>
         <Modal.Body className="modal-body">
@@ -171,7 +202,7 @@ const SideDishesModal = () => {
         </Modal.Body>
         <Modal.Footer>
           <div className="total">
-            <strong>Total: R$ {totalPrice.toFixed(2)}</strong>
+            <strong>Total: R$ {absolutePrice.toFixed(2)}</strong>
           </div>
           <Button variant="secondary" onClick={handleClose}>Fechar</Button>
           <Button variant="primary" onClick={addOrder}>Adicionar pedido</Button>

@@ -53,11 +53,11 @@ const DeliveryAddressForm = () => {
         },
         (error) => {
           console.error(error);
-          setError("Unable to retrieve your location.");
+          setError("Não foi possível pegar sua localização.");
         }
       );
     } else {
-      setError("Geolocation is not supported by this browser.");
+      setError("Geolocalização não é suportada por este navegador.");
     }
   };
 
@@ -70,7 +70,7 @@ const DeliveryAddressForm = () => {
       console.log(data)
       return data.address; // Return the address object
     } else {
-      setError("Failed to fetch address.");
+      setError("Falha ao se comunicar com servidor de geolocalização.");
       return null;
     }
   };

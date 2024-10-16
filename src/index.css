@@ -34,6 +34,7 @@ button:hover{
 h1, h2, h2, h4, h5, h6, p, span{
   font-family: "Lalezar", system-ui, Avenir, Helvetica, Arial, sans-serif;
   margin: 0px;
+  color: black;
 }
 
 .modalErrorMessage{

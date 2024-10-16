@@ -22,13 +22,14 @@ const Hours = () => {
           <div className="hoursInfo">
             {
               operatingHours.map((item, index)=>(
-                <div key={index} style={item.day.includes(currentDay) ? { color: "#71058C", textDecoration:"underline" } : {}} className="hour">
+                <div key={index} id={item.day.includes(currentDay) ? "currentDay" : ""} className="hour">
                   <p>{item.day}</p>
                   <p>{item.hours}</p>
                 </div>
               ))
             }
           </div>
+          <h4 className="hoursWarning">Aviso: O horário pode variar em feriados.</h4>
         </div>
     </div>
   )

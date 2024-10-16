@@ -12,6 +12,10 @@
   }
   
   .size-amount .modal-subtitle {
+    margin-bottom: 3px;
+  }
+
+  .size-amount .modal-subtitle span {
     font-size: small;
     font-family: Tahoma, Geneva, Verdana, sans-serif;
     margin-bottom: 3px;
@@ -85,6 +89,10 @@
 
   .modal-header .header-title .header-title-text{
     display: flex;
+  }
+
+  .modal-body{
+    max-height: 55vh;
   }
   
   .table-row span{

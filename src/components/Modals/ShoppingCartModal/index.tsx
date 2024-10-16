@@ -1,45 +1,44 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Modal, Button, Table } from 'react-bootstrap'
-import { cupPrices } from './../../../jsons'
+import { cupPrices, sideDishes } from './../../../jsons'
 import { ModalsContext } from '../../../context/Modals'
+import { FaArrowLeft } from 'react-icons/fa'
+import { OrderContext } from '../../../context/Order'
+import "./style.css"
 
 const ShoppingCartModal: React.FC = () => {
-    const [cart, setCart] = useState<{ cupSize: string; sideDishes: Array<{ name: string; price: number }> }[]>([])
-    const { isShoppingCartModalOn, setIsShoppingCartModalOn }=useContext(ModalsContext)
-    const [selectedCupSize, setSelectedCupSize] = useState<string | null>(null)
-    const [selectedSideDishes, setSelectedSideDishes] = useState<{ name: string; price: number }[]>([])
+    const { isShoppingCartModalOn, setIsShoppingCartModalOn, setIsSideDishesModalOn }=useContext(ModalsContext)
+    const { orderList, absolutePrice, setOrderList, setAbsolutePrice, setTotalPrice, setQuantities, setSelectedCup }=useContext(OrderContext)
 
     const handleClose = () =>{
         setIsShoppingCartModalOn(false)
+        setOrderList({count:0, orders:[]})
+        setAbsolutePrice(0)
+        setTotalPrice(0)
+        setQuantities(Array(sideDishes.length).fill(0))
+        setSelectedCup(-1)
     }
-    const addToCart = () => {
-        if (selectedCupSize) {
-            const cup = cupPrices.find(c => c.size === selectedCupSize);
-            if (cup) {
-                setCart([...cart, { cupSize: selectedCupSize, sideDishes: selectedSideDishes }]);
-                resetSelection();
-            }
-        }
-    }
-
-    const resetSelection = () => {
-        setSelectedCupSize(null)
-        setSelectedSideDishes([])
+    const handleReturn=()=>{
+        setIsShoppingCartModalOn(false)
+        setIsSideDishesModalOn(true)
     }
 
-    const totalValue = () => {
-        const cupTotal = cart.reduce((total, item) => {
-            const cup = cupPrices.find(c => c.size === item.cupSize);
-            return total + (cup ? cup.price : 0) + item.sideDishes.reduce((sum, dish) => sum + dish.price, 0);
-        }, 0)
-        return cupTotal.toFixed(2)
+    const getSelectedSideDishes = (quantities:number[]) => {
+        console.log("AA")
+        console.log(quantities)
+        return quantities.map((quantity:number, index:number) =>
+            quantity > 0 ? `${sideDishes[index].name}(${quantity})` : ""
+        ).filter(Boolean).join(", ")
     }
 
     return (
         <>
-            <Modal show={isShoppingCartModalOn} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Carrinho</Modal.Title>
+            <Modal className='ShoppingCartModal' show={isShoppingCartModalOn}>
+                <Modal.Header className='modal-header'>
+                        <Button variant="link" onClick={handleReturn} className="d-flex align-items-center me-2">
+                            <FaArrowLeft style={{ fontSize: '20px' }} />
+                        </Button>
+                        <Modal.Title className="modal-title">Carrinho</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Table striped bordered hover>
@@ -51,23 +50,20 @@ const ShoppingCartModal: React.FC = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {cart.map((item, index) => (
+                            {orderList.orders.map((order, index:number) => (
                                 <tr key={index}>
-                                    <td>{item.cupSize}</td>
-                                    <td>{item.sideDishes.map(d => d.name).join(', ')}</td>
-                                    <td>${(cupPrices.find(c => c.size === item.cupSize)?.price || 0) + item.sideDishes.reduce((sum, dish) => sum + dish.price, 0).toFixed(2)}</td>
+                                    <td>{order.selectedCup !== -1 && cupPrices[order.selectedCup].size}</td>
+                                    <td>{getSelectedSideDishes(order.quantity) || "Nenhum"}</td>
+                                    <td>R$ {order.totalPrice.toFixed(2)}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </Table>
                 </Modal.Body>
-                <Modal.Footer>
-                    <h5>Total: ${totalValue()}</h5>
+                <Modal.Footer className='modal-footer'>
+                    <strong>Total: R${absolutePrice.toFixed(2)}</strong>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={addToCart}>
-                        Add to Cart
+                        Fechar
                     </Button>
                 </Modal.Footer>
             </Modal>
