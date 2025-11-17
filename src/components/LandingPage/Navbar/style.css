@@ -9,6 +9,11 @@
   display: flex;
   align-items: center;
 }
+
+.networksIcons img {
+  cursor: pointer;
+}
+
 .logoDiv img {
   width: 6em;
 }
