@@ -10,8 +10,8 @@ import "./style.css"
 
 const PaymentModal=()=>{
   const [copied, setCopied] = useState(false)
-  const debtorCPF="02170395610"
-  const debtorName="Kauã Moreira Batista"
+  const debtorCPF="999999999999"
+  const debtorName="Nome do Cliente"
 
   const { absolutePrice, selectedCup, quantities } = useContext(OrderContext)
   const { isPaymentModalOn, setIsPaymentModalOn, setIsLocationModalOn } = useContext(ModalsContext)
@@ -19,7 +19,7 @@ const PaymentModal=()=>{
   
 
   const description = `Pagamento de ${selectedCup !== -1 && cupPrices[selectedCup].size}`;
-  const data:any = generatePixCode(absolutePrice, debtorCPF, debtorName, description)
+  const data = generatePixCode(absolutePrice, debtorCPF, debtorName, description)
 
   const handleCopyPix = () => {
     navigator.clipboard.writeText(data.pixCopiaECola)
@@ -93,7 +93,7 @@ const PaymentModal=()=>{
 
 
 export default PaymentModal
-function generatePixCode(absolutePrice: number, debtorCPF: string, debtorName: string, description: string): any {
+function generatePixCode(absolutePrice: number, debtorCPF: string, debtorName: string, description: string) {
   console.log(absolutePrice, debtorCPF, debtorName, description)
   return { pixCopiaECola: "00020101021226830014BR.GOV.BCB.PIX2561qrcodespix.sejaefi.com.br/v2/b3e136a97ea346f1a1747ca934d2e7a05204000053039865802BR5905EFISA6008SAOPAULO62070503***6304D03A" }
 }
